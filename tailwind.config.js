@@ -36,7 +36,12 @@ module.exports = {
     fontFamily: {
       sans: "Roboto, sans-serif"
     },
-    extend: {},
+    extend: {
+      backgroundImage:{
+        blur: 'url(/src/assets/blur.png)',
+        codeMockup: "url(/src/assets/codeMockup.png)"
+      }
+    },
   },
   plugins: [],
 }

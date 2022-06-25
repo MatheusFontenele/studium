@@ -49,10 +49,12 @@ export function Video(props: VideoProps) {
 	});
 	console.log(data?.lesson.videoId);
 
-	if (!data) {
-		<div className="flex-1">
-			<h1>Carregando...</h1>
-		</div>;
+	if (!data || !data.lesson) {
+		return (
+			<div className="flex-1">
+				<p>Carregando...</p>
+			</div>
+		);
 	}
 	return (
 		<div className="flex-1 flex flex-col">
