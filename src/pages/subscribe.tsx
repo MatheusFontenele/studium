@@ -1,6 +1,26 @@
+import { gql, useMutation } from "@apollo/client";
+import { FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Logo } from "../components/Logo";
+import { useCreateSubscriberMutation } from "../graphql/generated";
 
 export function Subscribe() {
+	const navigate = useNavigate();
+	const [name, setName] = useState("");
+	const [email, setEmail] = useState("");
+
+	const [createSubscribe] = useCreateSubscriberMutation();
+
+	async function handleSubscribe(event: FormEvent) {
+		event.preventDefault();
+		await createSubscribe({
+			variables: {
+				name: name,
+				email: email,
+			},
+		});
+		navigate("/event");
+	}
 	return (
 		<div className="min-h-screen bg-blur bg-cover bg-no-repeat flex flex-col items-center">
 			<div className="max-w-[1100px] w-full flex justify-between mt-20 mx-auto items-center ">
@@ -22,16 +42,22 @@ export function Subscribe() {
 					<strong className="text-2xl mb-6 block">
 						Inscreva-s gratuitamente
 					</strong>
-					<form action="" className="flex flex-col gap-2 w-full">
+					<form
+						action=""
+						className="flex flex-col gap-2 w-full"
+						onSubmit={handleSubscribe}
+					>
 						<input
 							className="bg-gray-900 rounded px-5 h-14"
 							type="text"
 							placeholder="Seu nome completo"
+							onChange={(event) => setName(event.target.value)}
 						/>
 						<input
 							className="bg-gray-900 rounded px-5 h-14"
 							type="text"
 							placeholder="Digite seu email"
+							onChange={(event) => setEmail(event.target.value)}
 						/>
 
 						<button
